@@ -1,0 +1,30 @@
+{
+    "cats": {
+        "breeds": [
+            "Russian Blue",
+            "Persian Cat",
+            "Siamese Cat",
+            "Scottish Fold",
+            "British Shorthair",
+            "Maine Coon",
+            "Ragdoll",
+            "Norwegian Forest Cat",
+            "Abyssinian Cat",
+            "Munchkin Cat"
+        ]
+    },
+    "dogs": {
+        "breeds": [
+            "Akita",
+            "Alaskan Malamute",
+            "Airedale Terrier",
+            "American Water Spaniel",
+            "American Eskimo Dog",
+            "English Foxhound",
+            "Affenpinscher",
+            "Boxer",
+            "English Mastiff",
+            "Bulldog"
+        ]
+    }
+}
