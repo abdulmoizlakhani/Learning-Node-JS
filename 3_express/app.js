@@ -1,12 +1,17 @@
 const express = require("express");
 
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+
 const app = express();
 
-const PORT = 4000;
+app.use(express.urlencoded({ extended: true }));
 
-app.use("/", (req, res) => {
-  console.log("App running on PORT: ", PORT);
-  res.send("<h1 style='color: red;'>Abdul Moiz Lakhani!</h1>");
+app.use(adminRoutes);
+app.use(shopRoutes);
+
+app.use((req, res) => {
+  res.status(404).send("<h1>Page not found!</h1>");
 });
 
-app.listen(PORT);
+app.listen(4000);
