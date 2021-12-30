@@ -15,14 +15,14 @@
           </header>
           <div class="card__image">
             <img
-              src="https://i.ytimg.com/vi/ggoJFaE71W8/mqdefault.jpg"
-              alt="Google"
+              src="<%= product.imageUrl %>"
+              alt="<%= product.title %>"
             />
           </div>
           <div class="card__content">
-            <h2 class="product__price">$19.99</h2>
+            <h2 class="product__price">$<%= product.price %></h2>
             <p class="product__description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <%= product.description %>
             </p>
           </div>
           <div class="card__actions">
