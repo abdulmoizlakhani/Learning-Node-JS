@@ -20,6 +20,13 @@ exports.getIndex = (req, res, next) => {
   });
 };
 
+exports.getOrders = (req, res, next) => {
+  res.render("shop/orders", {
+    docTitle: "My Orders",
+    path: "/orders",
+  });
+};
+
 exports.getCart = (req, res, next) => {
   res.render("shop/cart", {
     docTitle: "My Cart",
