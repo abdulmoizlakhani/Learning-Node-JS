@@ -63,11 +63,6 @@ exports.getProducts = (req, res) => {
 
 exports.postDeleteProduct = (req, res) => {
   const { productId } = req.body;
-  Product.findById(productId, (product) => {
-    if (!product) {
-      return res.redirect("/");
-    }
-    Product.deleteById(productId);
-    res.redirect("/admin/products");
-  });
+  Product.deleteById(productId);
+  res.redirect("/admin/products");
 };
