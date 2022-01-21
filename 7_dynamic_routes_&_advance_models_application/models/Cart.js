@@ -42,9 +42,12 @@ module.exports = class Cart {
       if (err) {
         return;
       }
-      let cart = JSON.parse(fileContent);
+      const cart = JSON.parse(fileContent);
       const updatedCart = { ...cart };
       const product = updatedCart.products.find((product) => product.id === id);
+      if (!product) {
+        return;
+      }
       const { qty } = product;
       updatedCart.products = updatedCart.products.filter(
         (product) => product.id !== id
@@ -53,6 +56,16 @@ module.exports = class Cart {
       fs.writeFile(dataPath, JSON.stringify(updatedCart), (err) => {
         console.log(err);
       });
+    });
+  }
+
+  static getCart(cb) {
+    fs.readFile(dataPath, (err, fileContent) => {
+      if (err) {
+        cb(null);
+      }
+      const cart = JSON.parse(fileContent);
+      cb(cart);
     });
   }
 };
