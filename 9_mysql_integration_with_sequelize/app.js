@@ -5,6 +5,8 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 
+const sequelize = require("./utils/database");
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -17,5 +19,14 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404Page);
+
+sequelize
+  .sync()
+  .then((response) => {
+    // console.log("RESPONSE", response);
+  })
+  .catch((err) => {
+    console.log(err, "ERR");
+  });
 
 app.listen(4000);
