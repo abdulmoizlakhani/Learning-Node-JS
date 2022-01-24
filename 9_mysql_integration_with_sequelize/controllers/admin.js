@@ -61,9 +61,8 @@ exports.postEditProduct = (req, res) => {
 };
 
 exports.getProducts = (req, res) => {
-  Product.fetchAll()
-    .then((response) => {
-      const [products] = response;
+  Product.findAll()
+    .then((products) => {
       res.render("admin/product-list", {
         products,
         docTitle: "All Products",
