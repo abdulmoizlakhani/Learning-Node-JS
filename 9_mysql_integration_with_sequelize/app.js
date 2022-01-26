@@ -6,7 +6,7 @@ const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 
 // Models
-const { Product, User } = require("./models");
+const { Product, User, Cart, CartItem } = require("./models");
 
 const sequelize = require("./utils/database");
 
@@ -37,6 +37,10 @@ app.use(errorController.get404Page);
 // Model Associations
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
 
 sequelize
   // .sync({ force: true })
@@ -51,7 +55,9 @@ sequelize
     return user;
   })
   .then((user) => {
-    console.log("user", user);
+    return user.createCart();
+  })
+  .then((cart) => {
     app.listen(4000);
   })
   .catch((err) => {

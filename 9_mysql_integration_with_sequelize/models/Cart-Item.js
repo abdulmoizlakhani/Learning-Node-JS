@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../utils/database");
 
-class Cart extends Model {}
+class CartItem extends Model {}
 
-Cart.init(
+CartItem.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -12,8 +12,9 @@ Cart.init(
       primaryKey: true,
       unique: true,
     },
+    quantity: DataTypes.INTEGER.UNSIGNED,
   },
-  { sequelize, modelName: "Cart" }
+  { sequelize, modelName: "CartItem" }
 );
 
-module.exports = Cart;
+module.exports = CartItem;
