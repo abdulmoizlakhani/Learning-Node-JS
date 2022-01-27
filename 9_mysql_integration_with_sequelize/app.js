@@ -6,7 +6,7 @@ const shopRoutes = require("./routes/shop");
 const errorController = require("./controllers/error");
 
 // Models
-const { Product, User, Cart, CartItem } = require("./models");
+const { Product, User, Cart, CartItem, Order, OrderItem } = require("./models");
 
 const sequelize = require("./utils/database");
 
@@ -41,6 +41,9 @@ User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
   // .sync({ force: true })
