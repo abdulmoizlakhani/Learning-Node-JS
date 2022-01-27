@@ -191,6 +191,18 @@ form {
   color: white;
 }
 
+.danger {
+  border: 1px solid red;
+  color: red;
+  background: white;
+}
+
+.danger:hover,
+.danger:active {
+  background-color: red;
+  color: white;
+}
+
 .centered {
   text-align: center;
 }
