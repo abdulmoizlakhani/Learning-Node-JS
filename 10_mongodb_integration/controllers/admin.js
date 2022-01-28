@@ -9,14 +9,10 @@ exports.getAddProduct = (req, res) => {
 };
 
 exports.postAddProduct = (req, res) => {
-  const { title, imageUrl, price, description } = req.body;
-  req.user
-    .createProduct({
-      title,
-      imageUrl,
-      price,
-      description,
-    })
+  const { title, price, description, imageUrl } = req.body;
+  const product = new Product(title, price, description, imageUrl);
+  product
+    .save()
     .then((result) => {
       console.log("Product Created!");
       res.redirect("/admin/products");
@@ -35,11 +31,8 @@ exports.getEditProduct = (req, res) => {
 
   const { productId } = req.params;
 
-  req.user
-    .getProducts({ where: { id: productId } })
-    .then((products) => {
-      const [product] = products;
-
+  Product.findById(productId)
+    .then((product) => {
       if (!product) {
         return res.redirect("/");
       }
@@ -58,10 +51,10 @@ exports.getEditProduct = (req, res) => {
 
 exports.postEditProduct = (req, res) => {
   const { productId, title, imageUrl, price, description } = req.body;
-  Product.update(
-    { title, imageUrl, price, description },
-    { where: { id: productId } }
-  )
+  const product = new Product(title, price, description, imageUrl, productId);
+
+  product
+    .save()
     .then(() => {
       res.redirect("/admin/products");
     })
@@ -71,8 +64,7 @@ exports.postEditProduct = (req, res) => {
 };
 
 exports.getProducts = (req, res) => {
-  req.user
-    .getProducts()
+  Product.fetchAll()
     .then((products) => {
       res.render("admin/product-list", {
         products,
@@ -87,7 +79,7 @@ exports.getProducts = (req, res) => {
 
 exports.postDeleteProduct = (req, res) => {
   const { productId } = req.body;
-  Product.destroy({ where: { id: productId } })
+  Product.deleteById(productId)
     .then(() => {
       res.redirect("/admin/products");
     })
