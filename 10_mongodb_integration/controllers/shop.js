@@ -44,28 +44,8 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-  let products = [];
-
   req.user
-    .getCart()
-    .then((cart) => {
-      fetchedCart = cart;
-      return cart.getProducts();
-    })
-    .then((prod) => {
-      products = prod;
-      return req.user.createOrder();
-    })
-    .then((order) => {
-      const updatedProducts = products.map((product) => {
-        product.OrderItem = { quantity: product.CartItem.quantity };
-        return product;
-      });
-      return order.addProducts(updatedProducts);
-    })
-    .then(() => {
-      return fetchedCart.setProducts(null);
-    })
+    .addOrder()
     .then(() => {
       res.redirect("/orders");
     })
@@ -76,7 +56,7 @@ exports.postOrder = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
   req.user
-    .getOrders({ include: ["Products"] })
+    .getOrders()
     .then((orders) => {
       res.render("shop/orders", {
         docTitle: "My Orders",
