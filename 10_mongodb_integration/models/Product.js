@@ -4,12 +4,13 @@ const getDb = require("../utils/database").getDb;
 const { ObjectId } = mongodb;
 
 class Product {
-  constructor(title, price, description, imageUrl, id) {
+  constructor(title, price, description, imageUrl, id, userId) {
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
     this._id = id ? new ObjectId(id) : null;
+    this.userId = userId;
   }
 
   // Save or Update Product
@@ -24,13 +25,7 @@ class Product {
     } else {
       dbOp = db.collection("products").insertOne(this);
     }
-    return dbOp
-      .then((result) => {
-        console.log("RESULT: ", result);
-      })
-      .catch((err) => {
-        console.log("ERR: ", err);
-      });
+    return dbOp;
   }
 
   // Fetch All Products
@@ -41,7 +36,6 @@ class Product {
       .find()
       .toArray()
       .then((products) => {
-        console.log("PRODUCTS: ", products);
         return products;
       })
       .catch((err) => {
@@ -57,7 +51,6 @@ class Product {
       .find({ _id: new ObjectId(productId) })
       .next()
       .then((product) => {
-        console.log("PRODUCT: ", product);
         return product;
       })
       .catch((err) => {
