@@ -11,7 +11,13 @@ exports.getAddProduct = (req, res) => {
 exports.postAddProduct = (req, res) => {
   const { title, price, description, imageUrl } = req.body;
 
-  const product = new Product({ title, price, description, imageUrl });
+  const product = new Product({
+    title,
+    price,
+    description,
+    imageUrl,
+    userId: req.user,
+  });
 
   product
     .save()
@@ -73,6 +79,8 @@ exports.postEditProduct = (req, res) => {
 
 exports.getProducts = (req, res) => {
   Product.find()
+    // .select("title price -_id")
+    // .populate("userId", "name")
     .then((products) => {
       res.render("admin/product-list", {
         products,
